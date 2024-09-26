@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D Data</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>D&D API</h1>
+    </header>
+    
+    <div id="buttonContainer">
+        <button id="showSpells">Spells</button>
+        <button id="showFeats">Feats</button>
+        <button id="showItems">Items</button>
+      </div>
+      
+
+    <div class="container" id="dataContainer">
+    </div>
+
+    <script>
+        const dataContainer = document.getElementById('dataContainer');
+
+        document.getElementById('showSpells').addEventListener('click', () => {
+            fetch('/spells')
+                .then(response => response.json())
+                .then(data => {
+                    dataContainer.innerHTML = '';
+                    data.spells.forEach(spell => {
+                        const spellCard = `
+                            <div class="spell-card">
+                                <h3>${spell.name}</h3>
+                                <p>${spell.index}</p>
+                                <a href="/spell/${spell.index}">View Details</a>
+                            </div>
+                        `;
+                        dataContainer.innerHTML += spellCard;
+                    });
+                });
+        });
+
+        document.getElementById('showFeats').addEventListener('click', () => {
+            fetch('/feats')
+                .then(response => response.json())
+                .then(data => {
+                    dataContainer.innerHTML = '';
+                    data.feats.forEach(feat => {
+                        const featCard = `
+                            <div class="feat-card">
+                                <h3>${feat.name}</h3>
+                                <p>${feat.index}</p>
+                            </div>
+                        `;
+                        dataContainer.innerHTML += featCard;
+                    });
+                });
+        });
+
+        document.getElementById('showItems').addEventListener('click', () => {
+            fetch('/items')
+                .then(response => response.json())
+                .then(data => {
+                    dataContainer.innerHTML = '';
+                    data.items.forEach(item => {
+                        const itemCard = `
+                            <div class="item-card">
+                                <h3>${item.name}</h3>
+                                <p>${item.index}</p>
+                            </div>
+                        `;
+                        dataContainer.innerHTML += itemCard;
+                    });
+                });
+        });
+    </script>
+</body>
+</html>
+
+
+
